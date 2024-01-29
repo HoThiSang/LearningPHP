@@ -1,0 +1,1 @@
+<h1 style="text-align: center; color: coral;">Product page at Learning_Laravel</h1>
