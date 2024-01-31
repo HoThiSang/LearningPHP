@@ -1,0 +1,1 @@
+Nếu muốn dùng như cách cũ thì chúng ta phải thiết lập trong providers -> vào RouterService 
