@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 // Have to must use namespace ở đầu
+use App\Http\Controllers\Admin\DashboardConntroller;
 use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Controller;
@@ -21,6 +22,10 @@ use App\Http\Controllers\Controller;
 
 
 // Cleint router :: 
+Route::get('/', function(){
+  return '<h1>Trang chủ Laravel</h1>';
+})->name('home');
+
 Route::prefix('category')->group(function() {
   // danh sách chuyên mục
     Route::get('/',[CategoriesController::class, 'index'])->name('categories.list');
@@ -39,8 +44,9 @@ Route::prefix('category')->group(function() {
 
 });
 
-Route::prefix('admin')->group(function(){
+Route::middleware('auth.admin')->prefix('admin')->group(function(){
  
-    Route::resource('products', ProductsController::class);
+    Route::get('/',[DashboardConntroller::class, 'index'] );
+    Route::middleware('auth.admin.product')->resource('products', ProductsController::class);
  
 });
