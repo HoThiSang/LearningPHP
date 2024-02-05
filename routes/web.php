@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DashboardConntroller;
 use App\Http\Controllers\HomeController;
 
+
 use App\Http\Controllers\Controller;
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,7 @@ use App\Http\Controllers\Controller;
 
 
 // Cleint router :: 
-Route::get('/', function(){
-  return '<h1>Trang chủ Laravel</h1>';
-})->name('home');
+Route::get('/',[HomeController::class,'index'])->name('home');
 
 Route::prefix('category')->group(function() {
   // danh sách chuyên mục
@@ -43,6 +42,8 @@ Route::prefix('category')->group(function() {
   Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory']);
 
 });
+
+Route::get('products/{id}', [HomeController::class, 'getProductDetail']);
 
 Route::middleware('auth.admin')->prefix('admin')->group(function(){
  
