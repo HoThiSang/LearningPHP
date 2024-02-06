@@ -36,10 +36,13 @@ class CategoriesController extends Controller
         $name = $request->name;
         //  echo $url;
         dd($id);
-        */
-       // dd(request()->id);
-       $name = request('name', 'Laravel');
+          $name = request('name', 'Laravel');
        dd($name);
+            // dd(request()->id);
+        */
+
+        $query = $request->query();
+        dd($query);
         return  view('clients/categories/list');
     }
 
@@ -58,7 +61,9 @@ class CategoriesController extends Controller
     // POST
     public function addCategory(Request $request)
     {
-        return  view('clients/categories/add');
+        $category_name = $request->old('category_name', 'Mặc định');
+        echo $category_name;
+        return  view('clients/categories/add', compact('category_name'));
     }
 
     // show form thêm dữ liệu 
@@ -69,15 +74,55 @@ class CategoriesController extends Controller
 
     public function handleAddcategory(Request $request)
     {
-        // Ví dụ không muốn cô 
+        /* Ví dụ không muốn cô 
         $allData = $request->all();
         print_r($_POST);
         //   return redirect(route('categories.add'));
         //   return "submit them chuyên mục";
+    */
+
+        if ($request->has('category_name')) {
+            $categoryName = $request->id;
+
+            $request->flash(); /// ste sesson flash
+            return  redirect(route('categories.add'));
+        } else {
+            return "Không có";
+        }
     }
 
     public function deleteCategory($id)
     {
         return "submit xóa chuyên mục";
+    }
+
+    //
+    public function getFile()
+    {
+        return view('clients/categories/file');
+    }
+
+    // Xử lý thông tin file 
+    public function handleFile(Request $request)
+    {
+
+        if ($request->hasFile('photo')) {
+            if ($request->photo->isValid()) {
+                $file = $request->photo;
+               // $path = $file->path();
+                $ext = $file ->extension();
+             //   $path = $file->store('images');
+             //  $path = $file->storeAs('images', 'imag-url.txt') ;
+             // Lấy tên ảnh gốc
+              // $fileName = $file->getClientOriginalName();
+              // Đổi tên file 
+                $fileName = md5(uniqid()).'.'. $ext;
+                dd($fileName);
+            }else{
+                return "Upload  không thành công";
+            }
+        } else {
+            return "Vui lòng chọn file";
+        }
     }
 }

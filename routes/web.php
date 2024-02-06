@@ -41,6 +41,11 @@ Route::prefix('category')->group(function() {
   // Xóa chuyên mục
   Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory']);
 
+// Hiển thị form upload
+  Route::get('/upload', [CategoriesController::class, 'getFile'])->name('categories.upload');
+
+  Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.upload');
+
 });
 
 Route::get('products/{id}', [HomeController::class, 'getProductDetail']);

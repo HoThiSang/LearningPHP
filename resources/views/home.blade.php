@@ -12,8 +12,8 @@
     </header>
     <main>
         <h1>Content-Laravel</h1>
-          // <h2><?php echo $content ?></h2>
-          <h2>{$content} </h2>
+           <h2><?php echo $content ?></h2>
+          <h2><?php  echo $content ?></h2>
     </main>
     <footer>
         <h1>Footer-Laravel</h1>
