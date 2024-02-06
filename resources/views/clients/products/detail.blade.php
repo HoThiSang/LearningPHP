@@ -6,6 +6,6 @@
     <title>Chi tiết sản phẩm</title>
 </head>
 <body>
-    <h1>Chi tiết sản phẩm {{$id}}</h1>
+    <h1>Chi tiết sản phẩm <?php echo $id ?></h1>
 </body>
 </html>
