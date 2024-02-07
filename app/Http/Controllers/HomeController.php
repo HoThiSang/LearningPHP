@@ -4,47 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use PhpParser\Node\Stmt\Case_;
+use PhpParser\Node\Stmt\Switch_;
 
 class HomeController extends Controller
 {
-
+    public $data = [];
     public function index()
     {
-        $title = "Học lập trình web tại Diepthao.com";
-        $content = "Học Laravel tại Diepthao.com";
-        /*
-        $dataView = [
-            'title' => $title,
-            'content' => $content
-        ];
-    -------
-        $contentView = view('home');
-        $contentView= $contentView->render();// Khi mong muốn xử lý dữ liệu thô
-        echo $contentView;
-          return View::make('home', compact('title', 'content'));
-        return view('home')->with(['title'=>$title, 'content'=>$content]);
-*/
-        return view('home', compact('title', 'content'));
+        $this->data['welcome'] = 'Học lập trình tại Laravel';
+        $this->data['content'] = '<h3>Chương I nhập môn Laravel</h3>
 
+
+        <p>Kiến thức 1</p>
+        <p>Kiến thức 2</p>
+        <p>Kiến thức 3</p>
+        <p>Kiến thức 4</p>
+        ';
+        $this->data['dataArr']=[];
+        $this->data['index'] = 0;
+        $this->data['number']=9;
+
+        return view('home', $this->data);
     }
 
 
-    public function getNews()
-    {
-        return "Danh sách tin tức";
-    }
-
-    public function getCategory($id)
-    {
-        return "Danh sách category " . $id;
-    }
-
-     public function getProductDetail($id)
-    {
-     //  return $id;
-      // return "Danh sách category " . $id;
-      //  return view('clients/products/detail', compact('id'));
-        return view('clients.products.detail', compact('id'));
-    }
 }
 
+
+  
