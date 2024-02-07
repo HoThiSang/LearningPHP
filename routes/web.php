@@ -22,3 +22,5 @@ use App\Http\Controllers\Controller;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/products', [HomeController::class, 'products']);

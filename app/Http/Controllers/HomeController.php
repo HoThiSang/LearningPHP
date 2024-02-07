@@ -25,11 +25,17 @@ class HomeController extends Controller
         $this->data['index'] = 0;
         $this->data['number']=9;
 
+        $this->data['title'] = "Đao tạo lập trình";
+
         $this->data['message']= "Đặt hàng thành công";
-        return view('home', $this->data);
+        return view('clients.home', $this->data);
     }
 
-
+    public function products(){
+          $this->data['title'] = "Sản phẩm";
+             return view('clients.products', $this->data);
+ 
+    }
 }
 
 
