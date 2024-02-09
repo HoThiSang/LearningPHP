@@ -5,33 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - Tứ Diệp Thảo website</title>
+    <link rel="stylesheet" href="{{asset('assets/clients/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/clients/css/style.css')}}">
 
+    @yield('css')
 
-        @yield('css')
-  
 </head>
 
 <body>
-    <header>
-        <h1>HEADER</h1>
-    </header>
-    <main>
-        <aside>
-        @section('sidebar')
+    @include('clients.blocks.header')
 
-        @endsection
-           @include('clients.blocks.sidebar');
-        </aside>
-        <div class="content">
-            @yield('content')
+    <main class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <aside>
+                        @section('sidebar')
+
+                        @endsection
+                        @include('clients.blocks.sidebar');
+                    </aside>
+                </div>
+                <div class="col-8">
+
+                    <div class="content">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </main>
-    <footer>
-        <h1>FOOTER</h1>
-    </footer>
-   
-        @yield('js')
-    
+    @include('clients.blocks.footer');
+    <script src="{{asset('assets/clients/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/clients/js/custom.js')}}"></script>
+
+    @yield('js')
+
 </body>
 
 </html>
