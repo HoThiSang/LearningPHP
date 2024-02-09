@@ -10,23 +10,16 @@
 @endsection
 
 @section('content')
-<h1>Trang chủ</h1>
-<button type="button" class="show">Show</button>
+    <h1>Home</h1>
+    @include('clients.content.slide')
+     @include('clients.content.about')
 @endsection
 
 
 @section('css')
-<style>
-    header {
-        background: yellow;
-    }
-</style>
+
 @endsection
 
 @section('js')
-<script>
-    document.querySelector('.show').onclick = function() {
-        alert('Thành công');
-    }
-</script>
+
 @endsection

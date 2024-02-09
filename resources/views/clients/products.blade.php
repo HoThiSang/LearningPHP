@@ -16,17 +16,8 @@
 
 
 @section('css')
-<style>
-    header {
-        background: green;
-    }
-</style>
 @endsection
 
 @section('js')
-<script>
-    document.querySelector('.show').onclick = function() {
-        alert('Thành công');
-    }
-</script>
+
 @endsection
