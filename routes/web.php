@@ -24,3 +24,7 @@ use App\Http\Controllers\Controller;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/products', [HomeController::class, 'products'])->name('products');
+
+Route::get('add-products', [HomeController::class, 'getAdd']);
+
+Route::put('add-products', [HomeController::class, 'putAdd']);
