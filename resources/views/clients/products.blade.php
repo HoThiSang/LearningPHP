@@ -11,8 +11,7 @@
 
 @section('content')
     <h1>SẢN PHẨM</h1>
-    <button type="button" class="show">Show</button>
-
+     <x-package-alert>Content</x-package-alert>
     @push('scripts')
     <script>
             console.log("OK 2");

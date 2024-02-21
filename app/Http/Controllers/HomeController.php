@@ -19,8 +19,7 @@ class HomeController extends Controller
         <p>Kiến thức 1</p>
         <p>Kiến thức 2</p>
         <p>Kiến thức 3</p>
-        <p>Kiến thức 4</p>
-        ';
+        <p>Kiến thức 4</p>';
         $this->data['dataArr']=[];
         $this->data['index'] = 0;
         $this->data['number']=9;
