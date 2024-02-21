@@ -23,6 +23,11 @@
     @else
     <p>Môi trường dev</p>
      @endenv
+
+  <x-alert type="info" :content="$message" data-icon="facebook"/>
+  
+   {{-- <x-inputs.button />
+    <x-form.button />--}}
 @endsection
 
 
