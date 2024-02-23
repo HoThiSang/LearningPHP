@@ -26,13 +26,23 @@
 
   <x-alert type="info" :content="$message" data-icon="facebook"/>
   
-   {{-- <x-inputs.button />
-    <x-form.button />--}}
+  
+    <p><img src="https://phunugioi.com/wp-content/uploads/2020/04/ve-tranh-de-tai-ngay-tet-don-giao-thua.jpg" alt=""></p>
+
+    <p><a href="{{route('download-image').'?image='. public_path(asset('storage/Avatar.jpg'))}}" class="btn btn-primary">Download ảnh</a></p>
+    <p><a href="{{route('download-doc').'?image='. public_path(asset('storage/demo-pdf.pdf'))}}" class="btn btn-success">Download doc</a></p>
+
+
 @endsection
 
 
 @section('css')
-
+<style>
+    img{
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 @endsection
 
 @section('js')
