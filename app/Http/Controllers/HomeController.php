@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use PhpParser\Node\Stmt\Case_;
@@ -50,6 +51,26 @@ class HomeController extends Controller
     public function putAdd(Request $request){
        return "php";
         dd($request);
+    }
+
+     public function downloadImage(Request $request){
+        if(!empty($request->image)){
+            $image = trim($request->image);
+
+        //   $fileName  = basename($image);
+            $fileName = 'image_'. uniqid().'.jpg';
+            return response()->download($image, $fileName);
+        }
+       
+    }
+    public function downloadDoc(Request $request){
+        if(!empty($request->file)){
+            $image = trim($request->file);
+    
+            $fileName = 'tai-lieu'. uniqid().'.pdf';
+       
+            return response()->download($image, $fileName);
+        }
     }
 }
 
