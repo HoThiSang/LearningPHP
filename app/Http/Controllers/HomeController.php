@@ -39,17 +39,37 @@ class HomeController extends Controller
 
     public function getAdd(){
         $this->data['title'] = "Thêm sản phẩm";
+        $this->data['errorMessage'] = "Vui lòng nhập tên sản phẩm";
         return view('clients.add', $this->data);
         
     }
 
-    public function postAdd(Request $request){
-        dd($request);
+    public function postAdd(Request $request)
+    {
+        $rules = [
+            'product_name' => 'required|min:6',
+            'product_price' => 'required|integer'
+        ];
+
+       /* $message = [
+            'product_name.required' => 'Tên :attribute bắt buộc nhập',
+            'product_name.min' => 'Tên sản phẩm không được nhỏ hơn :min ký tự', // Nó sẽ hiển thị số lượng ký tự là 6 bởi vì nó sẽ lấy từ min ở trên như chúng ta đã qđ
+            'product_price.required' => 'Giá bắt buộc là phải nhập',
+            'product_price.integer' => 'Giá phải là số',
+        ];*/
+         $message = [
+            'required' => 'Trường :attribute bắt buộc nhập',
+            'integer' => 'Giá phải là số',
+           'min' => 'Trường :attribute không được nhỏ hơn'
+        ];
+        $request->validate($rules, $message);
     }
+
+
 
     
     public function putAdd(Request $request){
-       return "php";
+       return "Phương thức Put php";
         dd($request);
     }
 

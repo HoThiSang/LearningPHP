@@ -28,6 +28,9 @@ Route::get('/products', [HomeController::class, 'products'])->name('products');
 
 Route::get('add-products', [HomeController::class, 'getAdd']);
 
+Route::post('add-products', [HomeController::class, 'postAdd']);
+
+
 Route::put('add-products', [HomeController::class, 'putAdd']);
 
 // Response with json, header 
