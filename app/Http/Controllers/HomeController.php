@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use PhpParser\Node\Stmt\Case_;
 use PhpParser\Node\Stmt\Switch_;
-
+use App\Http\Requests\ProductRequest;
 class HomeController extends Controller
 {
     public $data = [];
@@ -42,25 +42,28 @@ class HomeController extends Controller
         
     }
 
-    public function postAdd(Request $request)
+    public function postAdd(ProductRequest $request)
     {
+        dd($request);
+        /*
         $rules = [
             'product_name' => 'required|min:6',
             'product_price' => 'required|integer'
         ];
 
-       /* $message = [
+       $message = [
             'product_name.required' => 'Tên :attribute bắt buộc nhập',
             'product_name.min' => 'Tên sản phẩm không được nhỏ hơn :min ký tự', // Nó sẽ hiển thị số lượng ký tự là 6 bởi vì nó sẽ lấy từ min ở trên như chúng ta đã qđ
             'product_price.required' => 'Giá bắt buộc là phải nhập',
-            'product_price.integer' => 'Giá phải là số',
-        ];*/
+            product_price.integer' => 'Giá phải là số',
+        ];
          $message = [
             'required' => 'Trường :attribute bắt buộc nhập',
             'integer' => 'Giá phải là số',
            'min' => 'Trường :attribute không được nhỏ hơn'
         ];
-        $request->validate($rules, $message);
+        $request->validate($rules, $message);*/
+        
     }
 
 
