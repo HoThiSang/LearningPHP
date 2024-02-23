@@ -15,8 +15,6 @@ class HomeController extends Controller
     {
         $this->data['welcome'] = 'Học lập trình tại Laravel';
         $this->data['content'] = '<h3>Chương I nhập môn Laravel</h3>
-
-
         <p>Kiến thức 1</p>
         <p>Kiến thức 2</p>
         <p>Kiến thức 3</p>
