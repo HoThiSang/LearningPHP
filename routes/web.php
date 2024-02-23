@@ -30,23 +30,27 @@ Route::get('add-products', [HomeController::class, 'getAdd']);
 
 Route::put('add-products', [HomeController::class, 'putAdd']);
 
+// Response with json, header 
 Route::get('/demo1', function(){
-   
-    $response = (new Response())->cookie('Content-Type','Training Unicode');
-    return $response;
+   $contenArr = [
+    'name'=>'Unicode',
+    'version'=>'Laravel 10.x',
+    'lesson'=>'HTTP Response in Laravel'
+   ];
+   return response()->json($contenArr, 201)->header('API-KEY', '123456');
+});
+
+Route::get('demo-response', function(){
+    echo old('user_name');
+    return view('clients.demo-test');
+})->name('demo-response');
+
+Route::post('demo-response', function(Request $request){
+    if(!empty($request->user_name)){
+      // return redirect(route('demo-response'));
+      return back()->withInput()->with('mess', 'Validate thành công');
+    }
+    return redirect(route('demo-response'))->with('mess', 'Validate không thành công');
 });
 
 
-Route::get('/demo2', function(Request $request){
-    return $request ->cookie('unicode');
-});
-
-Route::get('/demo3', function(){
-    $response = response()->view('clients.demo-test', [
-        'title'=> 'Học HTTP Response'
-    ], 201)
-    ->header('Content-Type', 'application/json')
-    ->header('API-KEY','123456');
-
-    return $response;
-});
