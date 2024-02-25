@@ -10,6 +10,11 @@
 @endsection
 
 @section('content')
+@if($session(msg))
+<div class="alert alert-{{session('type')}}->width('')">
+{{session('msg')}}
+</div>
+@endif
     <h1>Home</h1>
     @datetime("2021-12-15 15:00:30")
     @include('clients.content.slide')
@@ -46,5 +51,6 @@
 @endsection
 
 @section('js')
+
 
 @endsection
