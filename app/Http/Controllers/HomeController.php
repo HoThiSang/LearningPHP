@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use PhpParser\Node\Stmt\Case_;
 use PhpParser\Node\Stmt\Switch_;
 use App\Http\Requests\ProductRequest;
+use App\Rules\UpperCase;
 use Illuminate\Support\Facades\Validator;
 class HomeController extends Controller
 {
@@ -46,8 +47,8 @@ class HomeController extends Controller
    public function postAdd(Request $request)
 {
     $rules = [
-        'product_name' => 'required|min:6',
-        'product_price' => 'required|integer'
+        'product_name' => ['required|min:6', new UpperCase ],
+        'product_price' => ['required|integer' , new UpperCase]
     ];
 
     $message = [
@@ -85,14 +86,13 @@ class HomeController extends Controller
          $message = [
             'required' => 'Trường :attribute bắt buộc nhập',
             'integer' => 'Giá phải là số',
-           'min' => 'Trường :attribute không được nhỏ hơn'
+           'min' => 'Trường :attribute không được nhỏ hơn',
+           'uppercase'=>'Trường :attribute phải viết hoa'
         ];
         $request->validate($rules, $message);*/
         
     }
 
-
-    
     public function putAdd(Request $request){
        return "Phương thức Put php";
         dd($request);
