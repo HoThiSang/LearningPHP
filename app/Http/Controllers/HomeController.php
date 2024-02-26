@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use PhpParser\Node\Stmt\Case_;
 use PhpParser\Node\Stmt\Switch_;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Validator;
 class HomeController extends Controller
 {
     public $data = [];
@@ -42,9 +43,33 @@ class HomeController extends Controller
         
     }
 
-    public function postAdd(ProductRequest $request)
-    {
-        dd($request->all());
+   public function postAdd(Request $request)
+{
+    $rules = [
+        'product_name' => 'required|min:6',
+        'product_price' => 'required|integer'
+    ];
+
+    $message = [
+        'product_name.required' => 'Tên :attribute bắt buộc nhập',
+        'product_name.min' => 'Tên sản phẩm không được nhỏ hơn :min ký tự',
+        'product_price.required' => 'Giá bắt buộc là phải nhập',
+        'product_price.integer' => 'Giá phải là số',
+    ];
+
+    $attributes = [
+        'product_name' => 'Tên sản phẩm',
+            'product_price' => 'Giá sản phẩm'
+    ];
+   $validator = Validator::make($request->all(), $rules, $message, $attributes);
+   // $validator->validate(); // Chạy validate
+   if($validator->fails()){
+        $validator->errors()->add('msg','Vui lòng kiểm trả dữ liệu');
+   // return redirect();
+  }else{
+    return redirect()->route('products');
+   }
+   return back()->withErrors($validator);
         /*
         $rules = [
             'product_name' => 'required|min:6',
@@ -65,7 +90,6 @@ class HomeController extends Controller
         $request->validate($rules, $message);*/
         
     }
-
 
 
     
