@@ -47,8 +47,10 @@ class HomeController extends Controller
    public function postAdd(Request $request)
 {
     $rules = [
-        'product_name' => ['required|min:6', new UpperCase ],
-        'product_price' => ['required|integer' , new UpperCase]
+        'product_name' => ['required|min:6', function ($attribute, $value, $fail){
+            isUppercase($value, 'Trường :attribute không hợp lệ',$fail);
+        }],
+        'product_price' => ['required|integer' ]
     ];
 
     $message = [
@@ -64,32 +66,14 @@ class HomeController extends Controller
     ];
    $validator = Validator::make($request->all(), $rules, $message, $attributes);
    // $validator->validate(); // Chạy validate
-   if($validator->fails()){
+   if($validator->failed()){
         $validator->errors()->add('msg','Vui lòng kiểm trả dữ liệu');
    // return redirect();
   }else{
     return redirect()->route('products');
    }
    return back()->withErrors($validator);
-        /*
-        $rules = [
-            'product_name' => 'required|min:6',
-            'product_price' => 'required|integer'
-        ];
-
-       $message = [
-            'product_name.required' => 'Tên :attribute bắt buộc nhập',
-            'product_name.min' => 'Tên sản phẩm không được nhỏ hơn :min ký tự', // Nó sẽ hiển thị số lượng ký tự là 6 bởi vì nó sẽ lấy từ min ở trên như chúng ta đã qđ
-            'product_price.required' => 'Giá bắt buộc là phải nhập',
-            product_price.integer' => 'Giá phải là số',
-        ];
-         $message = [
-            'required' => 'Trường :attribute bắt buộc nhập',
-            'integer' => 'Giá phải là số',
-           'min' => 'Trường :attribute không được nhỏ hơn',
-           'uppercase'=>'Trường :attribute phải viết hoa'
-        ];
-        $request->validate($rules, $message);*/
+       
         
     }
 
@@ -117,6 +101,7 @@ class HomeController extends Controller
             return response()->download($image, $fileName);
         }
     }
+
 }
 
 
