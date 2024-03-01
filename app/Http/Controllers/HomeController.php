@@ -10,8 +10,10 @@ use PhpParser\Node\Stmt\Switch_;
 use App\Http\Requests\ProductRequest;
 use App\Rules\UpperCase;
 use Illuminate\Support\Facades\Validator;
+
 class HomeController extends Controller
 {
+ 
     public $data = [];
     public function index()
     {
@@ -21,51 +23,60 @@ class HomeController extends Controller
         <p>Kiến thức 2</p>
         <p>Kiến thức 3</p>
         <p>Kiến thức 4</p>';
-        $this->data['dataArr']=[];
+        $this->data['dataArr'] = [];
         $this->data['index'] = 0;
-        $this->data['number']=9;
+        $this->data['number'] = 9;
 
         $this->data['title'] = "Đao tạo lập trình";
 
-        $this->data['message']= "Đặt hàng thành công";
+        $this->data['message'] = "Đặt hàng thành công";
         return view('clients.home', $this->data);
     }
 
-    public function products(){
-          $this->data['title'] = "Sản phẩm";
-             return view('clients.products', $this->data);
- 
+    public function products()
+    {
+        $this->data['title'] = "Sản phẩm";
+        return view('clients.products', $this->data);
     }
 
-    public function getAdd(){
+    public function getAdd()
+    {
         $this->data['title'] = "Thêm sản phẩm";
         $this->data['errorMessage'] = "Vui lòng nhập tên sản phẩm";
         return view('clients.add', $this->data);
-        
     }
 
-   public function postAdd(Request $request)
-{
-    $rules = [
-        'product_name' => ['required|min:6', function ($attribute, $value, $fail){
-            isUppercase($value, 'Trường :attribute không hợp lệ',$fail);
-        }],
-        'product_price' => ['required|integer' ]
-    ];
+    public function postAdd(Request $request)
+    {
+        return "Okcee";
+        $rules = [
+            'product_name' => ['required|min:6'],
+            'product_price' => ['required|integer']
+        ];
 
-    $message = [
-        'product_name.required' => 'Tên :attribute bắt buộc nhập',
-        'product_name.min' => 'Tên sản phẩm không được nhỏ hơn :min ký tự',
-        'product_price.required' => 'Giá bắt buộc là phải nhập',
-        'product_price.integer' => 'Giá phải là số',
-    ];
+        $message = [
+            'product_name.required' => 'Tên :attribute bắt buộc nhập',
+            'product_name.min' => 'Tên sản phẩm không được nhỏ hơn :min ký tự',
+            'product_price.required' => 'Giá bắt buộc là phải nhập',
+            'product_price.integer' => 'Giá phải là số',
+        ];
 
-    $attributes = [
-        'product_name' => 'Tên sản phẩm',
+        $attributes = [
+            'product_name' => 'Tên sản phẩm',
             'product_price' => 'Giá sản phẩm'
-    ];
-   $validator = Validator::make($request->all(), $rules, $message, $attributes);
-   // $validator->validate(); // Chạy validate
+        ];
+
+
+        $request->validate($rules, $message);
+
+        return response()->json(['status'=>'success']);
+       // $validator = Validator::make($request->all(), $rules, $message, $attributes);
+       
+    //   $validator->validate($rules, $message);
+       
+       
+       
+        /*  // $validator->validate(); // Chạy validate
    if($validator->failed()){
         $validator->errors()->add('msg','Vui lòng kiểm trả dữ liệu');
    // return redirect();
@@ -73,36 +84,33 @@ class HomeController extends Controller
     return redirect()->route('products');
    }
    return back()->withErrors($validator);
-       
-        
+       */
     }
 
-    public function putAdd(Request $request){
-       return "Phương thức Put php";
+    public function putAdd(Request $request)
+    {
+        return "Phương thức Put php";
         dd($request);
     }
 
-     public function downloadImage(Request $request){
-        if(!empty($request->image)){
+    public function downloadImage(Request $request)
+    {
+        if (!empty($request->image)) {
             $image = trim($request->image);
 
-        //   $fileName  = basename($image);
-            $fileName = 'image_'. uniqid().'.jpg';
+            //   $fileName  = basename($image);
+            $fileName = 'image_' . uniqid() . '.jpg';
             return response()->download($image, $fileName);
         }
-       
     }
-    public function downloadDoc(Request $request){
-        if(!empty($request->file)){
+    public function downloadDoc(Request $request)
+    {
+        if (!empty($request->file)) {
             $image = trim($request->file);
-    
-            $fileName = 'tai-lieu'. uniqid().'.pdf';
-       
+
+            $fileName = 'tai-lieu' . uniqid() . '.pdf';
+
             return response()->download($image, $fileName);
         }
     }
-
 }
-
-
-  
