@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 // Have to must use namespace ở đầu
 use App\Http\Controllers\Admin\DashboardConntroller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UsersController;
 
 
 use App\Http\Controllers\Controller;
@@ -60,3 +61,19 @@ Route::post('demo-response', function(Request $request){
 Route::get('download-image', [HomeController::class, 'downloadImage'])->name('download-image');
 
 Route::get('download-doc', [HomeController::class, 'downloadDoc'])->name('download-doc');
+
+
+
+
+Route::get('myroute/{ten}', function($ten){
+  return "<h2>Hello ". $ten. "</h2>";
+});
+
+Route::get('myroute/{userId?}/{name?}', function($userId=1,$name="PNV"){
+  return "<h2 style ='color: coral'>User Id :". $userId." <br>Name : ". $name."</h2> ";
+});
+
+Route::prefix('users')->group(function(){
+
+  Route::get('/', [UsersController::class, 'index']);
+});
