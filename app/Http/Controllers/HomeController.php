@@ -10,6 +10,7 @@ use PhpParser\Node\Stmt\Switch_;
 use App\Http\Requests\ProductRequest;
 use App\Rules\UpperCase;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     public $data = [];
@@ -24,11 +25,15 @@ class HomeController extends Controller
         $this->data['dataArr']=[];
         $this->data['index'] = 0;
         $this->data['number']=9;
-
         $this->data['title'] = "Đao tạo lập trình";
-
         $this->data['message']= "Đặt hàng thành công";
-        return view('clients.home', $this->data);
+           /*
+        $user= DB::select('SELECT * FROM users WHERE email=:email',[
+                'email'=>'sang.ho25@student.passerellesnumeriques.org'
+        ]);
+        dd($user);*/
+
+       return view('clients.home', $this->data);
     }
 
     public function products(){
