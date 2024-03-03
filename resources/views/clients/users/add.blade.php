@@ -15,8 +15,8 @@
     @endif
 
     
-    @if($error->any())
-        <div class="alert alert-danger">Dư liệu nhập không hợp lệ</div>
+    @if($errors->any())
+        <div class="alert alert-danger">Dư liệu nhập không hợp lệ. Vui lòng kiểm tra lại</div>
     @endif
 
     <h1>{{ $title }}</h1>
@@ -38,7 +38,7 @@
     </div>
     @csrf
     <button type="submit" class="btn btn-success">Thêm mới</button>
-    <a href="{{route('user.post-add')}}" class="btn btn-warning">Quay lại</a>
+    <a href="{{route('users.index')}}" class="btn btn-warning">Quay lại</a>
    </form>
     
 @endsection

@@ -73,7 +73,7 @@ Route::get('myroute/{userId?}/{name?}', function ($userId = 1, $name = "PNV") {
   return "<h2 style ='color: coral'>User Id :" . $userId . " <br>Name : " . $name . "</h2> ";
 });
 // Nên đặt tên cho groups để dễ xử lý
-Route::prefix('users')->name('users')->group(function () {
+Route::prefix('users')->name('users.')->group(function () {
 
   Route::get('/', [UsersController::class, 'index'])->name('index');
 

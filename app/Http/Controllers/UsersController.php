@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
 
@@ -29,7 +29,27 @@ class UsersController extends Controller
 
     public function postAdd(Request $request)
     {
+        
         $request ->validate([
+            'username' =>'required |min:5',
+            'email'=>'required |email'
+        ], [
+            'username.require'=>'Họ và tên bắt buộc phải nhập',
+            'username.min'=>'Họ và tên bắt buộc phải nhập',            
+            'email.require'=>'Email bắt buộc phải nhập',
+            'email.email'=>'Email không đúng định dạng',
+            'email.unique'=>'Email không tồn tại trên hệ thống ',
+        ]);
+        
+         /*   $dataInsert = [
+            $request->username,
+            $request->email,
+            date('Y-m-d H:i:s')
+        ];
+        $this->users->addUser($dataInsert);*/
+        dd($request->all());
+       // return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');
+       /* $validator = Validator::make([
             'username' =>'require|min:5',
             'email'=>'require|email'
         ], [
@@ -39,14 +59,8 @@ class UsersController extends Controller
             'email.email'=>'Email không đúng định dạng',
             'email.unique'=>'Email không tồn tại trên hệ thống ',
         ]);
-     /*   $dataInsert = [
-            $request->username,
-            $request->email,
-            date('Y-m-d H:i:s')
-        ];
-        $this->users->addUser($dataInsert);*/
-        dd($request->all());
-       // return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');
+        
+    */
     }
 
    
