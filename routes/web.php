@@ -35,26 +35,26 @@ Route::post('add-products', [HomeController::class, 'postAdd']);
 Route::put('add-products', [HomeController::class, 'putAdd']);
 
 // Response with json, header 
-Route::get('/demo1', function(){
-   $contenArr = [
-    'name'=>'Unicode',
-    'version'=>'Laravel 10.x',
-    'lesson'=>'HTTP Response in Laravel'
-   ];
-   return response()->json($contenArr, 201)->header('API-KEY', '123456');
+Route::get('/demo1', function () {
+  $contenArr = [
+    'name' => 'Unicode',
+    'version' => 'Laravel 10.x',
+    'lesson' => 'HTTP Response in Laravel'
+  ];
+  return response()->json($contenArr, 201)->header('API-KEY', '123456');
 });
 
-Route::get('demo-response', function(){
-    echo old('user_name');
-    return view('clients.demo-test');
+Route::get('demo-response', function () {
+  echo old('user_name');
+  return view('clients.demo-test');
 })->name('demo-response');
 
-Route::post('demo-response', function(Request $request){
-    if(!empty($request->user_name)){
-      // return redirect(route('demo-response'));
-      return back()->withInput()->with('mess', 'Validate thành công');
-    }
-    return redirect(route('demo-response'))->with('mess', 'Validate không thành công');
+Route::post('demo-response', function (Request $request) {
+  if (!empty($request->user_name)) {
+    // return redirect(route('demo-response'));
+    return back()->withInput()->with('mess', 'Validate thành công');
+  }
+  return redirect(route('demo-response'))->with('mess', 'Validate không thành công');
 });
 
 
@@ -65,15 +65,19 @@ Route::get('download-doc', [HomeController::class, 'downloadDoc'])->name('downlo
 
 
 
-Route::get('myroute/{ten}', function($ten){
-  return "<h2>Hello ". $ten. "</h2>";
+Route::get('myroute/{ten}', function ($ten) {
+  return "<h2>Hello " . $ten . "</h2>";
 });
 
-Route::get('myroute/{userId?}/{name?}', function($userId=1,$name="PNV"){
-  return "<h2 style ='color: coral'>User Id :". $userId." <br>Name : ". $name."</h2> ";
+Route::get('myroute/{userId?}/{name?}', function ($userId = 1, $name = "PNV") {
+  return "<h2 style ='color: coral'>User Id :" . $userId . " <br>Name : " . $name . "</h2> ";
 });
+// Nên đặt tên cho groups để dễ xử lý
+Route::prefix('users')->name('users')->group(function () {
 
-Route::prefix('users')->group(function(){
+  Route::get('/', [UsersController::class, 'index'])->name('index');
 
-  Route::get('/', [UsersController::class, 'index']);
+  Route::get('/add', [UsersController::class, 'add'])->name('add');
+
+  Route::post('/add', [UsersController::class, 'postAdd'])->name('post-add');
 });

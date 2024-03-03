@@ -14,6 +14,7 @@
     @endif
 
     <h1>{{ $title }}</h1>
+    <a href="{{route('users.add')}}" class="btn btn-primary"></a>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -25,18 +26,20 @@
         </thead>
         
         <tbody>
-            @forelse ($users as $key => $user)
-                <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->created_at }}</td>
-                </tr>
-            @empty
+            @if(!empty($userList))
+                @foreach ($userList as $key => $user)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->created_at }}</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
                     <td colspan="4">Không có người dùng</td>
                 </tr>
-            @endforelse
+            @endif
         </tbody>
     </table>
 @endsection
