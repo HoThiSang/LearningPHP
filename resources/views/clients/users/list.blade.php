@@ -14,14 +14,16 @@
     @endif
 
     <h1>{{ $title }}</h1>
-    <a href="{{route('users.add')}}" class="btn btn-primary"></a>
-    <table class="table table-bordered">
+    <a href="{{route('users.add')}}" class="btn btn-primary">Thêm khách hàng mới</a>
+   <table class="table table-bordered mt-4">
         <thead>
             <tr>
                 <th>STT</th>
                 <th>Email</th>
                 <th>Name</th>
                 <th style="width:15%">UTime</th>
+                <th width:"5%">Sửa</th>
+                <th width:"5%">Xóa</th>
             </tr>
         </thead>
         
@@ -33,11 +35,18 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->created_at }}</td>
+                                               <td>
+                            <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm">Sửa</a>
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa</a>
+                        </td>
+
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td colspan="4">Không có người dùng</td>
+                    <td colspan="6">Không có người dùng</td>
                 </tr>
             @endif
         </tbody>

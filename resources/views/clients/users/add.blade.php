@@ -16,7 +16,7 @@
 
     
     @if($errors->any())
-        <div class="alert alert-danger">Dư liệu nhập không hợp lệ. Vui lòng kiểm tra lại</div>
+        <div class="alert alert-danger">Dữ liệu nhập không hợp lệ. Vui lòng kiểm tra lại</div>
     @endif
 
     <h1>{{ $title }}</h1>
@@ -24,7 +24,7 @@
    <form action="" method="post">
     <div class="mb-3">
         <label for="username">Họ và tên</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Họ và tên">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Họ và tên" >
         @error('username')
         <span style="color: red;">{{$message}}</span>
         @enderror
