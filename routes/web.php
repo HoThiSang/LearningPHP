@@ -29,7 +29,7 @@ Route::get('/products', [HomeController::class, 'products'])->name('products');
 
 Route::get('add-products', [HomeController::class, 'getAdd']);
 
-Route::post('add-products', [HomeController::class, 'postAdd']);
+Route::post('add-products', [HomeController::class, 'postAdd'])->name('post-add');
 
 
 Route::put('add-products', [HomeController::class, 'putAdd']);
