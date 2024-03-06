@@ -42,4 +42,41 @@ class Users extends Model
     {
         return DB::statement($sql);
     }
+
+    
+    public function learningQueryBuilder()
+    {
+        // Lấy tất cả các bản ghi của table
+       $list = DB::table($this->table)
+       ->select('email', 'name')
+    //   ->where('id',2)
+     //  ->where('id','>',2)
+     // sử dụng kết hợp sử dụng AND cách 1
+     /*  ->where('id','>=',2)
+       ->where('id','<=',2)
+
+       // Cách hai sử dụng mảng hai chiều cho AND
+       ->where([
+        [
+            'id','>=',3
+        ],
+         [
+            'id','<=',4
+        ]
+
+       ])
+       */
+      // Sử dụng orderwhere 
+        ->where('id',2)
+        ->orWhere('id', 4)
+
+       ->get();
+       dd($list);
+    
+
+       // Lấy 1 bản ghi đầu tiên của table (Lấy thông tin không thấy tội ghê )
+        $detail = DB::table($this->table)->first();
+        dd($detail);
+        
+     }
 }
