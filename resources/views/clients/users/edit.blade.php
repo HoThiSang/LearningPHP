@@ -20,7 +20,7 @@
 
     <h1>{{ $title }}</h1>
 
-      <form action="{{ route('users.getEdit', ['id' => $userDetail->id]) }}" method="post">
+      <form action="" method="post">
             <div class="mb-3">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{old('email') ?? $userDetail->email}}">

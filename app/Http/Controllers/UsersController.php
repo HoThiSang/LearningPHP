@@ -18,6 +18,9 @@ class UsersController extends Controller
 
     public function index()
     {
+        $statement = $this->users->statementUser("DELETE FROM users ");
+
+        dd($statement);
         $title = "Danh sách người dùng";
         $userList = $this->users->getAllUser();
         return view("clients.users.list", compact('title', 'userList'));
@@ -65,40 +68,41 @@ class UsersController extends Controller
     */
     }
 
-   public function getEdit(Request $request, $id)
-{
-    $title = "Cập nhật người dùng";
+    public function getEdit(Request $request, $id = 0)
+    {
+        $title = "Cập nhật người dùng";
 
-    if (!empty($id)) {
-        $userDetail = $this->users->getDetail($id);
-        
-        if (!empty($userDetail[0])) {
-            $request->session()->put('id', $id);
-            $userDetail = $userDetail[0];
-            return view('clients.users.edit', compact('userDetail', 'title'));
+        if (!empty($id)) {
+            $userDetail = $this->users->getDetail($id);
+
+            if (!empty($userDetail[0])) {
+                $request->session()->put('id', $id);
+                $userDetail = $userDetail[0];
+                return view('clients.users.edit', compact('userDetail', 'title'));
+            } else {
+                return redirect()->route('users.index')->with('msg', 'Người dùng này không tồn tại');
+            }
         } else {
-            return redirect()->route('users.index')->with('msg', 'Người dùng này không tồn tại');
+            return redirect()->route('users.index')->with('msg', 'Liên kết không tồn tại');
         }
-    } else {
-        return redirect()->route('users.index')->with('msg', 'Liên kết không tồn tại');
+
+        // Các dòng mã cho trang 'add' nên được đặt ở đây, sau đoạn mã kiểm tra id
+
+        // Nếu bạn muốn thực hiện các hành động cập nhật dữ liệu, hãy di chuyển nó vào đây
+        $dataInsert = [
+            $request->username,
+            $request->email,
+            date('Y-m-d H:i:s')
+        ];
+        $this->users->updateUser($dataInsert, $id);
+
+        // Sử dụng with trên đối tượng redirect, không phải $this
+        return back()->with('msg', "Cập nhật người dùng vừa mới");
     }
 
-    // Các dòng mã cho trang 'add' nên được đặt ở đây, sau đoạn mã kiểm tra id
-
-    // Nếu bạn muốn thực hiện các hành động cập nhật dữ liệu, hãy di chuyển nó vào đây
-    $dataInsert = [
-        $request->username,
-        $request->email,
-        date('Y-m-d H:i:s')
-    ];
-    $this->users->updateUser($dataInsert, $id);
-
-    // Sử dụng with trên đối tượng redirect, không phải $this
-    return back()->with('msg', "Cập nhật người dùng vừa mới");
-}
-
-    public function postEdit(Request $request, $id){
-          $request->validate([
+    public function postEdit(Request $request, $id)
+    {
+        $request->validate([
             'username' => 'required |min:5',
             'email' => 'required |email'
         ], [
@@ -114,6 +118,33 @@ class UsersController extends Controller
             $request->email,
             date('Y-m-d H:i:s')
         ];
-        $this->users->updateUser($dataInsert,$id);
+        $this->users->updateUser($dataInsert, $id);
+        //  return redirect()->route('users.edit', ['id'=>$id])->with('Cập nhật người dùng thành công');
+        return back()->with('msg', 'Cập nhật người dùng thành công');
     }
+
+    public function delete($id = 0)
+    {
+        if (!empty($id)) {
+            $userDetail = $this->users->getDetail($id);
+
+            if (!empty($userDetail[0])) {
+
+                $deletStatus =  $this->users->deleteUser($id);
+                if ($deletStatus) {
+                    $msg = "Xóa người dùng thành công";
+                } else {
+                    $msg = "Bạn không thể xóa người dùng. Vui lòng thử lại sau!!";
+                }
+                //    return view('clients.users.edit', compact('userDetail', 'title'));
+            } else {
+                $msg = "Người dùng không tòn tại";
+            }
+        } else {
+            $msg = "Liên kết không tồn tại";
+        }
+        return redirect()->route('users.index')->with('msg', $msg);
+    }
+
+  
 }
