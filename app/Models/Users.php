@@ -44,39 +44,32 @@ class Users extends Model
     }
 
     
-    public function learningQueryBuilder()
-    {
-        // Lấy tất cả các bản ghi của table
-       $list = DB::table($this->table)
-       ->select('email', 'name')
-    //   ->where('id',2)
-     //  ->where('id','>',2)
-     // sử dụng kết hợp sử dụng AND cách 1
-     /*  ->where('id','>=',2)
-       ->where('id','<=',2)
+   public function learningQueryBuilder()
+{
 
-       // Cách hai sử dụng mảng hai chiều cho AND
-       ->where([
-        [
-            'id','>=',3
-        ],
-         [
-            'id','<=',4
-        ]
+     DB::getQueryLog();
+     $id = 2;
+    // Lấy tất cả các bản ghi của table
+    $list = DB::table($this->table)
+        ->select('email', 'name')
+      /*  ->where('id', 2)
+        ->where(function($query) use ($id)
+        {
+            $query->where('id','<',$id)->orwhere('id','>',$id);
+        })
+      
+      ->whereNotIn('id',[1,3])
+     */
+    ->whereNull('updated_at')
+        ->get();
 
-       ])
-       */
-      // Sử dụng orderwhere 
-        ->where('id',2)
-        ->orWhere('id', 4)
+    $sql =  DB::getQueryLog();
+    // Di chuyển hàm dd(DB::getQueryLog()) sau câu truy vấn để đảm bảo nó được gọi sau khi câu truy vấn thực sự được thực hiện.
+    dd( $list);
 
-       ->get();
-       dd($list);
-    
+    // Lấy 1 bản ghi đầu tiên của table
+    $detail = DB::table($this->table)->first();
+    dd($detail);
+}
 
-       // Lấy 1 bản ghi đầu tiên của table (Lấy thông tin không thấy tội ghê )
-        $detail = DB::table($this->table)->first();
-        dd($detail);
-        
-     }
 }

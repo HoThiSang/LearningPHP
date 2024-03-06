@@ -23,7 +23,7 @@ class UsersController extends Controller
         dd($builder);
         $title = "Danh sách người dùng";
         $userList = $this->users->getAllUser();
-        return view("clients.users.list", compact('title', 'userList'));
+        return view("clients.users.list", compact('title', 'userList','builder'));
     }
 
     public function add()
