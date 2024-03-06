@@ -51,7 +51,10 @@ class Users extends Model
      $id = 2;
     // Lấy tất cả các bản ghi của table
     $list = DB::table($this->table)
-        ->select('email', 'name')
+        ->select('users.*','groupss.name as group_name')
+        ->join('groupss', 'users.group_id', '=', 'groupss.id')
+        ->get();
+
       /*  ->where('id', 2)
         ->where(function($query) use ($id)
         {
@@ -59,14 +62,16 @@ class Users extends Model
         })
       
       ->whereNotIn('id',[1,3])
-     */
-    ->whereNull('updated_at')
-        ->get();
 
-    $sql =  DB::getQueryLog();
+    ->whereNull('updated_at','')
+    ->whereDay('created_at', '=', '07')->get();
+         */
+
+  dd($list);
+   $sql =  DB::getQueryLog();
     // Di chuyển hàm dd(DB::getQueryLog()) sau câu truy vấn để đảm bảo nó được gọi sau khi câu truy vấn thực sự được thực hiện.
-    dd( $list);
-
+  
+ dd($sql);
     // Lấy 1 bản ghi đầu tiên của table
     $detail = DB::table($this->table)->first();
     dd($detail);

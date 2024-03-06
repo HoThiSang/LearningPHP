@@ -20,7 +20,7 @@ class UsersController extends Controller
     {
         $statement = $this->users->statementUser("DELETE FROM users ");
         $builder = $this->users->learningQueryBuilder();
-        dd($builder);
+      //  dd($builder);
         $title = "Danh sách người dùng";
         $userList = $this->users->getAllUser();
         return view("clients.users.list", compact('title', 'userList','builder'));
