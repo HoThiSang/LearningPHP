@@ -29,7 +29,17 @@ class Users extends Model
     }
 
     public function updateUser($data, $id){
-        $data = array_merge($data, $id);
-        return DB::update('UPDATE users SET username=?, email= ?, update_at=? where id = ?', [$data]);
+        $data[] = $id;
+        return DB::update('UPDATE users SET email= ?,name=?,  updated_at=? where id = ?', $data);
+    }
+    
+    public function deleteUser($id)
+    {
+      return  DB::delete("DELETE FROM users WHERE id=?", [$id]);
+    }
+
+      public function statementUser($sql)
+    {
+        return DB::statement($sql);
     }
 }
