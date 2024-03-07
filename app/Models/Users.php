@@ -48,10 +48,10 @@ class Users extends Model
     public function learningQueryBuilder()
     {
 
-        DB::getQueryLog();
-        $id = 2;
+       // DB::getQueryLog();
+       // $id = 2;
         // Lấy tất cả các bản ghi của table
-        $list = DB::table('users')
+      //  $list = DB::table('users')
          //   ->select('users.*', 'groupss.group_name as group_name')
       //      ->join('groupss', 'users.group_id', '=', 'groupss.id')
             // Có thể thay bằng các câu lệnh như leftjoin, right 
@@ -65,9 +65,9 @@ class Users extends Model
        //     ->having('email_count', '>=',2)
       // ->limit(2)
     //   ->offset(2)
-    ->take(2)
-    ->skip(2)
-            ->get();
+  //  ->take(2)
+  //  ->skip(2)
+       //     ->get();
 
         /*  ->where('id', 2)
         ->where(function($query) use ($id)
@@ -81,11 +81,30 @@ class Users extends Model
     ->whereDay('created_at', '=', '07')->get();
          */
 
-        dd($list);
+     //   dd($list);
+     //================================================Bài 36 
+    /*   DB::table('users')->insert([
+        'email'=>'van.tran25@student.passerellesnumeriques.org',
+        'name'=>'Nhã Trần',
+        'group_id'=>1
+    ]);
+*//*
+      DB::table('users')
+      ->where('id',7)
+      ->update([
+        'email'=>'sang.tran25@student.passerellesnumeriques.org',
+        'name'=>'Nhã Trần',
+       'updated_at'=>date('Y-m-d H:i:s')
+    ]); 
+    $lastId = DB::getPdo()->lastInsertId();
+       dd($lastId); 
         $sql =  DB::getQueryLog();
         // Di chuyển hàm dd(DB::getQueryLog()) sau câu truy vấn để đảm bảo nó được gọi sau khi câu truy vấn thực sự được thực hiện.
+*/
+     
 
-        dd($sql);
+     $status = DB::table('users')->where('id','>', 8)->get();
+    $count = count($status);
         // Lấy 1 bản ghi đầu tiên của table
         $detail = DB::table($this->table)->first();
         dd($detail);
