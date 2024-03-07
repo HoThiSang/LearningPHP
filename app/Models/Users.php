@@ -103,8 +103,18 @@ class Users extends Model
 */
      
 
-     $status = DB::table('users')->where('id','>', 8)->get();
-    $count = count($status);
+     $list = DB::table('users')
+     ->where('group_id', '=', DB ::raw())
+    // ->selectRaw('name, email, count(id)')
+   //  ->orwhereRaw('id >8')
+   // ->orderByRaw('created_at DESC')
+ //  ->orderBy(DB::raw('created_at DESC'), )
+     ->get();
+   //  ->groupBy('email')
+  //   ->groupBy('name');
+   //  ->where(DB::raw('id>8'));
+    // ->where('id', '>', 8);
+   // $count = count($list);
         // Lấy 1 bản ghi đầu tiên của table
         $detail = DB::table($this->table)->first();
         dd($detail);
