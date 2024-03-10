@@ -6,23 +6,50 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Groups;
 
 class UsersController extends Controller
 {
 
-    private $users;
+    protected $users;
     public function __construct()
     {
         $this->users = new Users();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $statement = $this->users->statementUser("DELETE FROM users ");
-        $builder = $this->users->learningQueryBuilder();
-        dd($builder);
+        //  $statement = $this->users->statementUser("DELETE FROM users ");
+        //   $builder = $this->users->learningQueryBuilder();
+        //   dd($builder);
+        $filters = [];
+        $keyword = null;
+        if (!empty($request->status)) {
+            $status = $request->status;
+           if($status=='active'){
+            $status = 1;
+           }else{
+            $status = 0;
+           }
+           $filters[] = ['users.status','=', $status];
+        }
+
+          if (!empty($request->group_id)) {
+            $groupId = $request->group_id;
+          
+           $filters[] = ['users.status','=', $groupId];
+        }
+        
+        
+          if (!empty($request->keyword)) {
+            $keyword = $request->keyword;
+          
+        
+        }
+        
+
         $title = "Danh sách người dùng";
-        $userList = $this->users->getAllUser();
+        $userList = $this->users->getAllUser($filters, $keyword);
         return view("clients.users.list", compact('title', 'userList'));
     }
 
@@ -145,6 +172,4 @@ class UsersController extends Controller
         }
         return redirect()->route('users.index')->with('msg', $msg);
     }
-
-  
 }
