@@ -27,50 +27,48 @@ class UsersController extends Controller
         $keyword = null;
         if (!empty($request->status)) {
             $status = $request->status;
-           if($status=='active'){
-            $status = 1;
-           }else{
-            $status = 0;
-           }
-           $filters[] = ['users.status','=', $status];
+            if ($status == 'active') {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            $filters[] = ['users.status', '=', $status];
         }
 
-          if (!empty($request->group_id)) {
+        if (!empty($request->group_id)) {
             $groupId = $request->group_id;
-          
-           $filters[] = ['users.status','=', $groupId];
+
+            $filters[] = ['users.status', '=', $groupId];
         }
-        
-        
-          if (!empty($request->keyword)) {
+
+
+        if (!empty($request->keyword)) {
             $keyword = $request->keyword;
-          
-        
         }
-        
+
 
         $title = "Danh sách người dùng";
 
         // sap xep :
         $sortBy = $request->input('sort-by');
-        $sortType = $request->input('sort-type')?$request->input('sort-type'):'asc' ;
+        $sortType = $request->input('sort-type') ? $request->input('sort-type') : 'asc';
         $allowSort = ['asc', 'desc'];
 
-        if(!empty($sortType) && in_array($sortType, $allowSort)){
-             if($sortType=='desc'){
-            $sortType ='asc';
-        }else{
-            $sortType='desc';
-        }
-        }else{
-            $sortType ='asc';
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
+                $sortType = 'asc';
+            } else {
+                $sortType = 'desc';
+            }
+        } else {
+            $sortType = 'asc';
         }
 
         $sortArr = [
-            'sortBy'=>$sortBy,
-            'sortType'=>$sortType
+            'sortBy' => $sortBy,
+            'sortType' => $sortType
         ];
-       
+
         $userList = $this->users->getAllUser($filters, $keyword, $sortArr, self::_PER_PAGE);
         return view("clients.users.list", compact('title', 'userList', 'sortType'));
     }
@@ -78,31 +76,46 @@ class UsersController extends Controller
     public function add()
     {
         $title = "Them người dùng";
-        return view("clients.users.add", compact('title'));
+        $allGroup = getAllGroups();
+
+        return view("clients.users.add", compact('title', 'allGroup'));
     }
 
     public function postAdd(Request $request)
     {
 
-        $request->validate([
+        $vali =  $request->validate([
             'username' => 'required |min:5',
-            'email' => 'required |email'
+            'email' => 'required |email',
+             'group_id'=>['required','integer', function($attribute, $value, $fail){
+                    if($value == 0){
+                        $fail('Bắt buộc phải chọn nhóm');
+                    }
+             }],
+            'status'=>'required|integer'
         ], [
             'username.require' => 'Họ và tên bắt buộc phải nhập',
             'username.min' => 'Họ và tên bắt buộc phải nhập',
             'email.require' => 'Email bắt buộc phải nhập',
             'email.email' => 'Email không đúng định dạng',
             'email.unique' => 'Email không tồn tại trên hệ thống ',
+            'group_id.required'=>'Nhóm không được để trống',
+            'group_id.integer'=>'Nhóm không hợp lệ',
+            'status.required'=>'Trạng thái không được để trống',
+            'status.integer'=>'Trạng thái không hợp lệ'
         ]);
 
         $dataInsert = [
-            $request->username,
-            $request->email,
-            date('Y-m-d H:i:s')
+            'email' => $request->username,
+            'name' => $request->email,
+            'status' => $request->status,
+            'group_id'=>$request->group_id,
+            'created_at'=> date('Y-m-d H:i:s')
         ];
         $this->users->addUser($dataInsert);
-        dd($request->all());
-        // return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');
+     
+        //    dd($request->all());
+        //  return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');
         /* $validator = Validator::make([
             'username' =>'require|min:5',
             'email'=>'require|email'
