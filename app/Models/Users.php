@@ -14,14 +14,26 @@ class Users extends Model
 
   protected $table = 'users';
 
-  public function getAllUser($filters = [], $keyword = null)
+  public function getAllUser($filters = [], $keyword = null, $sortByArr=null)
   {
 // DB::enableQueryLog();
     $users = DB::table($this->table)
       ->select('users.*', 'groupss.group_name as group_name')
-      ->join('groupss', 'users.group_id', '=', 'groupss.id')
-      ->orderBy('created_at', 'DESC');
+      ->join('groupss', 'users.group_id', '=', 'groupss.id');
+  
 
+    $orderBy = 'created_at';
+    $orderType = 'desc';
+    if(!empty($sortByArr) && is_array($sortByArr)){
+      if(!empty($sortByArr['sortBy']) && !empty($sortByArr['sortType'])){
+        $orderBy = trim($sortByArr['sortBy']);
+        $orderType = trim($sortByArr['sortType']);
+
+
+    }
+      $users = $users->orderBy('users.'. $orderBy, $orderType);
+      $users= $users->orderBy($orderBy,$orderType );
+   
     if (!empty($filters)) {
       $users = $users->where($filters);
     }
@@ -37,7 +49,7 @@ class Users extends Model
   //  dd($sql);
     return $users;
   }
-
+  }
 
   public function addUser($data)
   {

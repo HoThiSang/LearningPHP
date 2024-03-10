@@ -49,8 +49,29 @@ class UsersController extends Controller
         
 
         $title = "Danh sách người dùng";
-        $userList = $this->users->getAllUser($filters, $keyword);
-        return view("clients.users.list", compact('title', 'userList'));
+
+        // sap xep :
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type')?$request->input('sort-type'):'asc' ;
+        $allowSort = ['asc', 'desc'];
+
+        if(!empty($sortType) && in_array($sortType, $allowSort)){
+             if($sortType=='desc'){
+            $sortType ='asc';
+        }else{
+            $sortType='desc';
+        }
+        }else{
+            $sortType ='asc';
+        }
+
+        $sortArr = [
+            'sortBy'=>$sortBy,
+            'sortType'=>$sortType
+        ];
+       
+        $userList = $this->users->getAllUser($filters, $keyword, $sortArr);
+        return view("clients.users.list", compact('title', 'userList', 'sortType'));
     }
 
     public function add()
