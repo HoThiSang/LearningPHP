@@ -13,8 +13,9 @@ class Users extends Model
   use HasFactory;
 
   protected $table = 'users';
+  
 
-  public function getAllUser($filters = [], $keyword = null, $sortByArr=null)
+  public function getAllUser($filters = [], $keyword = null, $sortByArr=null, $perPage =null)
   {
 // DB::enableQueryLog();
     $users = DB::table($this->table)
@@ -44,9 +45,17 @@ class Users extends Model
           $query->orwhere('email', 'like', '%' . $keyword . '%');
       });
     }
-    $users = $users->get();
+ //   $users = $users->get();
+
    // $sql = DB::getQueryLog();
   //  dd($sql);
+  if(!empty($perPage)){
+       $users = $users->paginate($perPage)->withQueryString(); // $perPage Bản ghi trên 1 trang
+  }else{
+    $users = $users->get();
+  }
+ 
+
     return $users;
   }
   }

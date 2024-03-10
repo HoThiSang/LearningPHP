@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\View\Components\Alert;
 use Illuminate\Support\Facades\Blade;
 // use  App\View\Components\Inputs\Button;
+use Illuminate\Pagination\Paginator;
 
 // use  App\View\Components\Form\Button as FormButton;
 class AppServiceProvider extends ServiceProvider
@@ -35,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('package-alert', Alert::class);
       //  Blade::component('button',  FormButton::class);
       //  Blade::component('button',  FormButton::class);
+       Paginator::useBootstrap();
+
     }
     }
 
