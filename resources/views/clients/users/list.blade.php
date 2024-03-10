@@ -50,11 +50,11 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th>Email</th>
-            <th>Name</th>
+            <th><a href="?sort-by=email&sort-type={{$sortType}}">Email</a></th>
+            <th style="width:15%"><a href="?sort-by=name&sort-type={{$sortType}}">Name</a></th>
             <td>Nhóm</td>
             <td>Trạng thái</td>
-            <th style="width:15%">UTime</th>
+            <th style="width:15%"><a href="?sort-by=created_at&sort-type={{$sortType}}">Time</a></th>
             <th width:"5%">Sửa</th>
             <th width:"5%">Xóa</th>
         </tr>
