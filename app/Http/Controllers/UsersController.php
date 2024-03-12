@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Groups;
-
+use App\Http\Requests\UserRequest;
 class UsersController extends Controller
 {
 
@@ -81,39 +81,18 @@ class UsersController extends Controller
         return view("clients.users.add", compact('title', 'allGroup'));
     }
 
-    public function postAdd(Request $request)
+    public function postAdd(UserRequest $request)
     {
-
-        $vali =  $request->validate([
-            'username' => 'required |min:5',
-            'email' => 'required |email',
-             'group_id'=>['required','integer', function($attribute, $value, $fail){
-                    if($value == 0){
-                        $fail('Bắt buộc phải chọn nhóm');
-                    }
-             }],
-            'status'=>'required|integer'
-        ], [
-            'username.require' => 'Họ và tên bắt buộc phải nhập',
-            'username.min' => 'Họ và tên bắt buộc phải nhập',
-            'email.require' => 'Email bắt buộc phải nhập',
-            'email.email' => 'Email không đúng định dạng',
-            'email.unique' => 'Email không tồn tại trên hệ thống ',
-            'group_id.required'=>'Nhóm không được để trống',
-            'group_id.integer'=>'Nhóm không hợp lệ',
-            'status.required'=>'Trạng thái không được để trống',
-            'status.integer'=>'Trạng thái không hợp lệ'
-        ]);
-
+  
         $dataInsert = [
-            'email' => $request->username,
-            'name' => $request->email,
+            'email' => $request->email,
+            'name' => $request->username,
             'status' => $request->status,
-            'group_id'=>$request->group_id,
-            'created_at'=> date('Y-m-d H:i:s')
+            'group_id' => $request->group_id,
+            'created_at' => date('Y-m-d H:i:s')
         ];
         $this->users->addUser($dataInsert);
-     
+
         //    dd($request->all());
         //  return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');
         /* $validator = Validator::make([
@@ -140,7 +119,6 @@ class UsersController extends Controller
             if (!empty($userDetail[0])) {
                 $request->session()->put('id', $id);
                 $userDetail = $userDetail[0];
-                return view('clients.users.edit', compact('userDetail', 'title'));
             } else {
                 return redirect()->route('users.index')->with('msg', 'Người dùng này không tồn tại');
             }
@@ -148,37 +126,27 @@ class UsersController extends Controller
             return redirect()->route('users.index')->with('msg', 'Liên kết không tồn tại');
         }
 
-        // Các dòng mã cho trang 'add' nên được đặt ở đây, sau đoạn mã kiểm tra id
-
-        // Nếu bạn muốn thực hiện các hành động cập nhật dữ liệu, hãy di chuyển nó vào đây
-        $dataInsert = [
-            $request->username,
-            $request->email,
-            date('Y-m-d H:i:s')
-        ];
-        $this->users->updateUser($dataInsert, $id);
+        $allGroup = getAllGroups();
 
         // Sử dụng with trên đối tượng redirect, không phải $this
-        return back()->with('msg', "Cập nhật người dùng vừa mới");
+        //  return back()->with('msg', "Cập nhật người dùng vừa mới");
+        return view('clients.users.edit', compact('userDetail', 'title', 'allGroup'));
     }
 
-    public function postEdit(Request $request, $id)
+    public function postEdit(UserRequest $request, $id)
     {
-        $request->validate([
-            'username' => 'required |min:5',
-            'email' => 'required |email'
-        ], [
-            'username.require' => 'Họ và tên bắt buộc phải nhập',
-            'username.min' => 'Họ và tên bắt buộc phải nhập',
-            'email.require' => 'Email bắt buộc phải nhập',
-            'email.email' => 'Email không đúng định dạng',
-            'email.unique' => 'Email không tồn tại trên hệ thống ',
-        ]);
+       $id = session('id');
+
+       if(empty($id)){
+            return back()->with('msg','Liên kết không tồn tại');
+       }
 
         $dataInsert = [
-            $request->username,
-            $request->email,
-            date('Y-m-d H:i:s')
+            'email' => $request->email,
+            'name' => $request->username,
+            'status' => $request->status,
+            'group_id' => $request->group_id,
+            'updated_at' => date('Y-m-d H:i:s')
         ];
         $this->users->updateUser($dataInsert, $id);
         //  return redirect()->route('users.edit', ['id'=>$id])->with('Cập nhật người dùng thành công');
