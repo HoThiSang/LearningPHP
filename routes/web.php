@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Admin\DashboardConntroller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\PostController;
 
 use App\Http\Controllers\Controller;
 /*
@@ -89,4 +89,10 @@ Route::prefix('users')->name('users.')->group(function () {
 
   Route::get('/delete/{id}', [UsersController::class, 'delete'])->name('delete');
 
+});
+
+
+Route::prefix('posts')->name('posts.')->group(function(){
+
+    Route::get('/', [PostController::class, 'index']);
 });
