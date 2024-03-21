@@ -95,4 +95,6 @@ Route::prefix('users')->name('users.')->group(function () {
 Route::prefix('posts')->name('posts.')->group(function(){
 
     Route::get('/', [PostController::class, 'index']);
+
+     Route::get('/add', [PostController::class, 'add']);
 });

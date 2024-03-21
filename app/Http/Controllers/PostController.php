@@ -49,7 +49,41 @@ class PostController extends Controller
         $allPost = Post::cursor();
 
         foreach ($allPost as $item) {
-           echo $item->title . '<br>';
+            echo $item->title . '<br>';
         }
+    }
+
+
+    public function add()
+    {
+        /*
+        $dataInsert = [
+            'title' => 'Lịch thi đấu và trực tiếp giải Thanh Niên sinh viên hôm nay: Căng như dây đàn',
+            'content' => 'Lịch thi đấu và trực tiếp giải Thanh Niên sinh viên hôm nay: Căng như dây đàn',
+            'status' => 1
+        ];
+        $post=Post::firstOrCreate([
+            'id' => 13
+        ], $dataInsert);
+        dd($post);
+        // $post = Post::create($dataInsert);
+
+        //    echo "Id vừa insert " . $post->id;
+        // $insertStatus= Post::insert($dataInsert);
+        // dd($insertStatus);
+        // dd()*/
+        $check = true;
+
+        $post = new Post();
+        $post->title = "Bài viết mới";
+        $post->content = "Bài viết mới";
+        if($check){
+            $post->status=1;
+        }
+        // Làm chức năng quên mật khẩu 
+        $post->save();
+         echo "Id vừa insert " . $post->id;
+        // dd($post);
+
     }
 }
