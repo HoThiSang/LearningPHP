@@ -1,0 +1,6 @@
+<?php 
+
+
+echo "Sang TDT";
+
+ print_r($_SERVER);
